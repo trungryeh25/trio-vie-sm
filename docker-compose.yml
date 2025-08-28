@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: trio_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: triov
+      POSTGRES_PASSWORD: Trung147
+      POSTGRES_DB: dbtriov
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    container_name: trio_backend
+    depends_on:
+      - postgres
+      - minio
+    environment:
+      DATABASE_URL: postgres://triov:Trung147@postgres:5432/dbtriov
+    ports:
+      - '3001:3001'
+
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+    container_name: trio_frontend
+    depends_on:
+      - backend
+    ports:
+      - '3000:3000'
+
+  minio:
+    image: minio/minio
+    container_name: trio_minio
+    restart: unless-stopped
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadminpw
+    ports:
+      - '9000:9000' # S3 API
+      - '9001:9001' # MinIO Console
+    command: server /data --console-address ":9001"
+    volumes:
+      - miniodata:/data
+
+volumes:
+  pgdata:
+  miniodata:

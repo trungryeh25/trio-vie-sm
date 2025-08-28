@@ -1,0 +1,13 @@
+{
+    "name": "trio-vie",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "build": "tsc -b packages/shared",
+        "dev:frontend": "pnpm --filter frontend dev",
+        "dev:backend": "pnpm --filter backend start:dev"
+    },
+    "devDependencies": {
+        "typescript": "^5.9.2"
+    }
+}
