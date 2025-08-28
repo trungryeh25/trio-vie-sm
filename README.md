@@ -51,4 +51,5 @@ _GitHub_: **trungryeh25**
 
 ---
 
-✨ TrioVie đang trong giai đoạn phát triển. Mọi đóng góp, issue và feedback đều rất được hoan nghênh!
+✨ TrioVie đang trong giai đoạn phát triển,
+
